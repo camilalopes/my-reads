@@ -1,5 +1,6 @@
 import React from 'react'
 import Book from './Book'
+import PropTypes from 'prop-types';
 
 class Shelf extends React.Component {
   render(){
@@ -16,6 +17,9 @@ class Shelf extends React.Component {
                 author={book.authors}
                 key={``.concat(book.id, index)}
                 shelf={book.shelf}
+                onChangeShelf={(shelf) => {
+                  this.props.onChangeShelf(book.id, shelf)
+                }}
               />
             ))}
           </ol>
@@ -23,6 +27,12 @@ class Shelf extends React.Component {
       </div>
     )
   }
+}
+
+Shelf.propTypes = {
+  title: PropTypes.string.isRequired,
+  books: PropTypes.array,
+  onChangeShelf: PropTypes.func.isRequired
 }
 
 export default Shelf

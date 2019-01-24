@@ -1,13 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Shelf from './Shelf'
+import PropTypes from 'prop-types';
 
 class  ListBooks extends React.Component {
   render(){
 
-    //let currentlyReadingBooks = this.props.books.filter((book) => book.shelf === 'currentlyReading');
-    //let wantToReadBooks = this.props.books.filter((book) => book.shelf === 'wantToRead');
-    //let readBooks = this.props.books.filter((book) => book.shelf === 'read');
     let shelfs = [
       {
         name: `currentlyReading`,
@@ -34,6 +32,9 @@ class  ListBooks extends React.Component {
                 title={shelf.title}
                 key={index}
                 books={this.props.books.filter((book) => book.shelf === shelf.name)}
+                onChangeShelf={(id, shelf) => {
+                  this.props.onChangeShelf(id, shelf)
+                }}
               />
             ))}
           </div>
@@ -44,6 +45,17 @@ class  ListBooks extends React.Component {
       </div>
     )
   }
+}
+
+ListBooks.propTypes = {
+  books: PropTypes.arrayOf(PropTypes.shape({
+  title: PropTypes.string.isRequired,
+  shelf: PropTypes.string.isRequired,
+  imageLinks: PropTypes.object.isRequired,
+  authors: PropTypes.arrayOf(PropTypes.string.isRequired),
+  id: PropTypes.string.isRequired,
+  })),
+  onChangeShelf: PropTypes.func.isRequired
 }
 
 export default ListBooks
