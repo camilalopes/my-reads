@@ -10,7 +10,7 @@ class Shelf extends React.Component {
         <h2 className="bookshelf-title">{this.props.title}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
-            {books.map((book, index)=>(
+            {books.map((book, index) => (
               <Book
                 imageLinks={book.imageLinks}
                 title={book.title}
