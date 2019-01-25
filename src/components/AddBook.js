@@ -1,5 +1,6 @@
 import React from 'react'
 import Book from './Book'
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
 import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
@@ -55,6 +56,11 @@ class  AddBook extends React.Component {
       </div>
     )
   }
+}
+
+AddBook.propTypes = {
+  books: PropTypes.array,
+  onChangeShelf: PropTypes.func.isRequired
 }
 
 export default AddBook
