@@ -1,30 +1,49 @@
 import React from 'react'
 import Book from './Book'
+import * as BooksAPI from './../utils/BooksAPI'
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom'
-import escapeRegExp from 'escape-string-regexp'
+//import escapeRegExp from 'escape-string-regexp'
 import sortBy from 'sort-by'
 
 class  AddBook extends React.Component {
 
   state = {
+    books: this.props.books,
     query: ''
+
   }
 
   updateQuery = (query) => {
-    this.setState({ query: query.trim() })
+    query = query.trim()
+    this.setState({ query })
+    this.searchBooks(query)
+  }
+
+  searchBooks = (query) => {
+    if (query) {
+      BooksAPI.search(query).then((books) => {
+        if(books.length > 0){
+          const myBooks = this.props.books
+          books.map((book) => {
+            const booksFound = myBooks.find(myBook => myBook.id === book.id)
+            book.shelf = booksFound ? booksFound.shelf : 'none'
+          })
+          this.setState({ books })
+        }
+        else{
+          this.setState({ books: [] })
+        }
+      })
+    } else{
+      this.setState({ books: this.props.books })
+    }
+
+    //books appear in alphabetical order
+    this.state.books.sort(sortBy('title'))
   }
 
   render(){
-    let showingBooks
-    if (this.state.query) {
-      const match = new RegExp(escapeRegExp(this.state.query), 'i')
-      showingBooks = this.props.books.filter((book) => match.test(book.title))
-    } else {
-      showingBooks = this.props.books
-    }
-
-    showingBooks.sort(sortBy('title'))
 
     return(
       <div className="search-books">
@@ -39,7 +58,7 @@ class  AddBook extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {showingBooks.map((book, index) => (
+            {this.state.books.map((book, index) => (
               <Book
                 imageLinks={book.imageLinks}
                 title={book.title}
@@ -51,6 +70,7 @@ class  AddBook extends React.Component {
                 }}
               />
             ))}
+
           </ol>
         </div>
       </div>

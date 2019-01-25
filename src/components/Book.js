@@ -9,7 +9,7 @@ class Book extends React.Component {
   }
 
   render(){
-   const imageURL = this.props.imageLinks.thumbnail || this.props.imageLinks.smallThumbnail
+   const imageURL = this.props.imageLinks ? this.props.imageLinks.smallThumbnail : ''
    return (
      <li>
        <div className="book">
