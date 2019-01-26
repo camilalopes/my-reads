@@ -12,7 +12,7 @@ git clone https://github.com/camilalopes/my-reads.git
 
 3. Start the application `npm start`
 
-4.  With your server running, visit the site: `http://localhost:8000`
+4.  With your server running, visit the site: `http://localhost:3000`
 
 ## Backend Server
 
