@@ -15,7 +15,7 @@ class  AddBook extends React.Component {
   }
 
   updateQuery = (query) => {
-    query = query.trim()
+    //query = query.trim()
     this.setState({ query })
     this.searchBooks(query)
   }
@@ -38,7 +38,6 @@ class  AddBook extends React.Component {
     } else{
       this.setState({ books: this.props.books })
     }
-
     //books appear in alphabetical order
     this.state.books.sort(sortBy('title'))
   }
@@ -57,7 +56,7 @@ class  AddBook extends React.Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid">
+        {/*  <ol className="books-grid">
             {this.state.books.map((book, index) => (
               <Book
                 imageLinks={book.imageLinks}
@@ -70,8 +69,25 @@ class  AddBook extends React.Component {
                 }}
               />
             ))}
-
-          </ol>
+          </ol> */}
+          {this.state.books.length > 0 ? (
+            <ol className="books-grid">
+              {this.state.books.map((book, index) => (
+                <Book
+                  imageLinks={book.imageLinks}
+                  title={book.title}
+                  author={book.authors}
+                  key={``.concat(book.id, index)}
+                  shelf={book.shelf}
+                  onChangeShelf={(shelf) => {
+                    this.props.onChangeShelf(book.id, shelf)
+                  }}
+                />
+              ))}
+            </ol>
+            ) : (
+            <p>No results</p>
+          )}
         </div>
       </div>
     )
